@@ -1,4 +1,37 @@
 spring:
+  profiles:
+    group:
+      "local": "testdb,common"
+      "dev":  "testdb,common"
+      "prod": "proddb,common"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "proddb"
+  datasource:
+    url: jdbc:mysql://ec2-3-36-121-99.ap-northeast-2.compute.amazonaws.com:3306/shop
+    username: seung
+    password: 1234
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "testdb"
   datasource:
     url: jdbc:h2:tcp://localhost/~/jpashop
     username: sa
@@ -9,11 +42,23 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-      #show_sql: true
+        #show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
-#  thymeleaf:
-#    prefix: classpath:/templates/
-#    suffix: .html
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "common"
+
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+
 logging.level:
   org.hibernate.SQL: debug
+
+
