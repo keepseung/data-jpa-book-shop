@@ -29,11 +29,14 @@ spring:
 ---
 
 spring:
+  h2:
+    console:
+      enabled: true
   config:
     activate:
       on-profile: "testdb"
   datasource:
-    url: jdbc:h2:tcp://localhost/~/jpashop
+    url: jdbc:h2:mem:jpashop
     username: sa
     password:
     driver-class-name: org.h2.Driver
